@@ -51,6 +51,7 @@ export const register = async (req: Request, res: Response) => {
 };
 
 export const login = async (req: Request, res: Response) => {
+  console.log("Gelen body:", req.body)
   try {
     const { username, password } = req.body;
     if (!username || !password) {

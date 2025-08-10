@@ -5,7 +5,7 @@
 		"description": "BE-6442 Prisma + MVC API  \nBlog API örneği (categories, posts, comments, tags)  \nPrisma ORM & Express MVC ile geliştirilmiştir.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "45060763",
-		"_collection_link": "https://vehbikilic.postman.co/workspace/45084511-ac2a-4877-8036-dec5ca59efc1/collection/45060763-5b1e3cbe-8276-483e-bf68-0ee40935a865?action=share&source=collection_link&creator=45060763"
+		"_collection_link": "https://vehbikilic.postman.co/workspace/Vehbi-Kilic's-Workspace~45084511-ac2a-4877-8036-dec5ca59efc1/collection/45060763-5b1e3cbe-8276-483e-bf68-0ee40935a865?action=share&source=collection_link&creator=45060763"
 	},
 	"item": [
 		{
@@ -633,6 +633,65 @@
 							"path": [
 								"tags",
 								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Ahmet\",\n  \"username\": \"ahmet123\",\n  \"password\": \"sifre123\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/register",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"ahmet123\",\n  \"password\": \"sifre123\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"login"
 							]
 						}
 					},
