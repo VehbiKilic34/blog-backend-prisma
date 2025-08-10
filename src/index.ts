@@ -1,4 +1,6 @@
 import express from 'express';
+import dotenv from 'dotenv';
+dotenv.config();
 import categoryRoutes from './categories/category.routes';
 import postRoutes from './posts/post.routes';
 import commentRoutes from './comments/comment.routes';
@@ -6,7 +8,7 @@ import tagRoutes from './tags/tag.routes';
 import postTagRoutes from './post-tags/post-tag.routes';
 
 const app = express();
-const port = 3000;
+const port =  process.env.PORT ? parseInt(process.env.PORT) : 3000;;
 
 app.use(express.json());
 
