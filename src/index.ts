@@ -1,4 +1,3 @@
-// src/index.ts
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -20,15 +19,15 @@ const port = process.env.PORT ? parseInt(process.env.PORT) : 3000;
 
 app.use(express.json());
 
-// Public erişim gereken rotalar (örneğin auth)
 app.use('/auth', authRoutes);
 
-// Diğer rotalarda önce token doğrula, sonra yetki kontrolü yap
+// Korunan rotalar
 app.use('/categories', authenticateJWT, authorize('category', 'read'), categoryRoutes);
 app.use('/posts', authenticateJWT, authorize('post', 'read'), postRoutes);
+// Eğer postTagRoutes alt path ise:
+app.use('/posts/:postId/tags', authenticateJWT, authorize('post_tag', 'read'), postTagRoutes);
 app.use('/comments', authenticateJWT, authorize('comment', 'read'), commentRoutes);
 app.use('/tags', authenticateJWT, authorize('tag', 'read'), tagRoutes);
-app.use('/posts', authenticateJWT, authorize('post_tag', 'read'), postTagRoutes); // /posts/:id/tags ile uyumlu
 app.use('/users', authenticateJWT, authorize('user', 'read'), userRoutes);
 
 app.listen(port, () => {

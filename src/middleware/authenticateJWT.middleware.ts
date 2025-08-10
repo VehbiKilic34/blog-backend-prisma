@@ -1,6 +1,5 @@
-// src/middleware/authenticateJWT.middleware.ts
 import { Request, Response, NextFunction } from 'express';
-import jwt from 'jsonwebtoken';
+import jwt, { JwtPayload } from 'jsonwebtoken';
 
 const accessSecret = process.env.JWT_ACCESS_SECRET!;
 
@@ -17,10 +16,8 @@ export function authenticateJWT(req: Request, res: Response, next: NextFunction)
 
   try {
     const payload = jwt.verify(token, accessSecret);
-    // İstersen TypeScript için req.user tipi tanımlanabilir
-    // Burada @ts-ignore ile uyarıyı geçici kapatıyoruz:
-    // @ts-ignore
-    req.user = payload; 
+    // req.user tipi için global augmentation yapılmalı
+    req.user = payload as JwtPayload; 
     next();
   } catch (err) {
     return res.status(401).json({ message: 'Geçersiz veya süresi dolmuş token' });
