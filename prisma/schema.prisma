@@ -7,6 +7,36 @@ generator client {
   provider = "prisma-client-js"
 }
 
+enum Role {
+  member
+  moderator
+  admin
+}
+
+model user {
+  id              Int               @id @default(autoincrement())
+  name            String
+  username        String            @unique
+  hashed_password String
+  role            Role              @default(member)
+  created_at      DateTime          @default(now())
+  deleted_at      DateTime?
+
+  posts           post[]
+  comments        comment[]
+  sessions        refresh_session[]
+}
+
+model refresh_session {
+  id         Int      @id @default(autoincrement())
+  user       user     @relation(fields: [user_id], references: [id])
+  user_id    Int
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  expires_at DateTime
+  revoked_at DateTime?
+}
+
 model category {
   id          Int      @id @default(autoincrement())
   name        String
@@ -19,6 +49,7 @@ model category {
 model post {
   id            Int       @id @default(autoincrement())
   category_id   Int
+  user_id       Int?
   title         String
   content       String
   created_at    DateTime  @default(now())
@@ -26,6 +57,7 @@ model post {
   deleted_at    DateTime?
 
   category      category  @relation(fields: [category_id], references: [id])
+  user          user?     @relation(fields: [user_id], references: [id])
   comments      comment[]
   post_tags     post_tag[]
 }
@@ -33,11 +65,13 @@ model post {
 model comment {
   id             Int      @id @default(autoincrement())
   post_id        Int
+  user_id        Int?
   content        String
   commenter_name String
   created_at     DateTime @default(now())
 
   post           post     @relation(fields: [post_id], references: [id])
+  user           user?    @relation(fields: [user_id], references: [id])
 }
 
 model tag {
@@ -54,6 +88,5 @@ model post_tag {
   post    post @relation(fields: [post_id], references: [id])
   tag     tag  @relation(fields: [tag_id], references: [id])
 
-  @@id([post_id, tag_id]) // compound ID
+  @@id([post_id, tag_id])
 }
-
