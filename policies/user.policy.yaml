@@ -1,0 +1,19 @@
+apiVersion: api.cerbos.dev/v1
+kind: ResourceSet
+metadata:
+  name: users
+spec:
+  resources:
+    - kind: user
+  actions:
+    - name: create
+    - name: read
+    - name: update
+    - name: delete
+  rules:
+    - actions: ["read"]
+      effect: ALLOW
+      roles: ["member", "moderator", "admin"]
+    - actions: ["create", "update", "delete"]
+      effect: ALLOW
+      roles: ["admin"]
